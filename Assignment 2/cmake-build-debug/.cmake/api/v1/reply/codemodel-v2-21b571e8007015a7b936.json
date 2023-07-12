@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/calebnewman/Documents/FGCU/Summer 2023/COP3530/Assignment 2/cmake-build-debug",
-		"source" : "/Users/calebnewman/Documents/FGCU/Summer 2023/COP3530/Assignment 2"
+		"build" : "/Users/calebnewman/Documents/GitHub/COP3530/Assignment 2/cmake-build-debug",
+		"source" : "/Users/calebnewman/Documents/GitHub/COP3530/Assignment 2"
 	},
 	"version" : 
 	{

@@ -1,6 +1,0 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S "/Users/calebnewman/Documents/FGCU/Summer 2023/COP3530/Linked_Lists" -B "/Users/calebnewman/Documents/FGCU/Summer 2023/COP3530/Linked_Lists/cmake-build-debug"
-CMake Error at CMakeLists.txt:1 (cmake_minimum_required):
-  CMake 3.25 or higher is required.  You are running version 3.23.2
-
-
--- Configuring incomplete, errors occurred!
