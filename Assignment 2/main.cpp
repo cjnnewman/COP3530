@@ -4,13 +4,43 @@
 // -----------------------------------------------------------------------
 #include <iostream>
 #include "linkedlist.hpp"
+#include "stack.hpp"
+#include "queue.hpp"
 
 int main() {
-    List linkedList;
+    //List linkedList;
+    //Stack stackList;
+    Queue queueList;
     int userMenuChoice;
     int userDataEntry;
     int userIndexEntry;
 
+    for (int i = 0; i < 3; i++) {
+        std::cout << "value to insert: ";
+        std::cin >> userDataEntry;
+        queueList.enqueue(userDataEntry);
+
+        queueList.printList();
+    }
+
+    std::cout << "Position 1 is: " << queueList.peek() << "\n";
+
+    /*for (int i = 0; i < 3; i++) {
+        std::cout << "value to insert: ";
+        std::cin >> userDataEntry;
+        stackList.push(userDataEntry);
+
+        stackList.printList();
+    }
+
+    for (int i = 0; i < 2; i++) {
+        stackList.pop();
+
+        stackList.printList();
+    }
+    */
+
+    /*
     do {
         std::cout << "MENU \n";
         std::cout << "1. Insert into front of list\t2. Insert into rear of list\n"
@@ -69,6 +99,7 @@ int main() {
         std::cout << "List currently: \n";
         linkedList.printList();
     } while (true);
+    */
 
     return 0;
 }

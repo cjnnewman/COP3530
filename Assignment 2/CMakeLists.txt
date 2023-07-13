@@ -3,4 +3,4 @@ project(Assignment_2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Assignment_2 main.cpp linkedlist.cpp linkedlist.hpp)
+add_executable(Assignment_2 main.cpp linkedlist.cpp linkedlist.hpp stack.cpp stack.hpp queue.cpp queue.hpp)

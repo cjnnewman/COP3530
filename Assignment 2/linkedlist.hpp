@@ -8,15 +8,9 @@
 #include <iostream>
 
 class List {
-
-    struct Node {
-        int value;
-        Node* next = nullptr;
-        Node* prev = nullptr;
-    };
-
-
 public:
+        List();
+    ~List();
     void isHeadNull();
     void insertFront(int data);
     void insertRear(int data);
@@ -28,9 +22,18 @@ public:
     bool insertAt(int data, int index);
     int removeAt(int index);
     int findIndex(int data);
+    int peek();
 
 private:
-    Node* head = nullptr;
+    struct Node {
+        int value;
+        Node* next;
+        Node* prev;
+    };
+
+    Node* head;
+    Node* tail;
+    int _size = 0;
 
 
 };

@@ -4,16 +4,17 @@
 // -----------------------------------------------------------------------
 #include "linkedlist.hpp"
 
-void List::isHeadNull(){
-    if (head == nullptr){
-        std::cout << "null \n";
-    }
-    else if (head != nullptr){
-        std::cout << "not null \n";
-    }
-    else{
-        std::cout << "neither?? \n";
-    }
+List::List() {
+    std::cout << "List object being created...\n";
+    new Node {0, nullptr, nullptr};
+    head = nullptr;
+    tail = nullptr;
+}
+
+List::~List() {
+    std::cout << "Object is being destroyed...\n";
+    makeEmpty();
+
 }
 
 int List::removeRearInt() {
@@ -30,42 +31,52 @@ int List::removeRearInt() {
         }
         value = pNode->value;
         pNode->prev->next = nullptr;
+        tail = pNode->prev;
         delete pNode;
+        _size--;
         return value;
     }
     return 0;
 }
 
 void List::insertRear(int data) {
-    if (head == nullptr){
+    if (!head){
         head = new Node;
+        tail = head;
         head->value = data;
+        _size++;
     }
-    else if (head->next != nullptr){
+    else if (head->next){
         Node* pNode = head;
         while (pNode->next != nullptr) {
             pNode = pNode->next;
         }
         Node* temp = new Node{data, nullptr, pNode};
         pNode->next = temp;
+        tail = temp;
+        _size++;
     }
     else {
         Node* pNode = head;
         Node* temp = new Node{data, nullptr, pNode};
         head->next = temp;
+        tail = temp;
+        _size++;
     }
 }
 
 void List::insertFront(int data) {
-    if (head == nullptr){
+    if (!head){
         head = new Node;
         head->value = data;
+        _size++;
     }
     else {
         Node* temp = head;
         Node* new_front = new Node{data, temp, nullptr};
         head = new_front;
         temp->prev = head;
+        _size++;
     }
 
 }
@@ -73,7 +84,7 @@ void List::insertFront(int data) {
 int List::removeFrontInt() {
     int value;
 
-    if (head == nullptr){
+    if (!head){
         std::cout << "List is empty, add something!\n";
         return -1;
     }
@@ -82,32 +93,21 @@ int List::removeFrontInt() {
         head = head->next;
         value = temp->value;
         delete temp;
+        _size--;
         return value;
     }
     else {
         value = head->value;
         head = nullptr;
+        _size--;
 
         return value;
     }
 }
 
 int List::size() {
-    int listSize = 0;
-    if (head == nullptr){
-        std::cout << "List is empty.\n";
-        return listSize;
-    }
-    else{
-        listSize++;
-        Node* pNode = head;
-        while (pNode->next != nullptr){
-            pNode = pNode->next;
-            listSize++;
-        }
-    }
 
-    return listSize;
+    return _size;
 }
 
 void List::makeEmpty() {
@@ -115,7 +115,7 @@ void List::makeEmpty() {
     Node* temp;
     pNode = head;
 
-    if (head == nullptr){
+    if (!head){
         std::cout << "List is already empty!" << "\n";
     }
     else if (head->next != nullptr) {
@@ -129,14 +129,16 @@ void List::makeEmpty() {
             delete temp;
         }
         head = nullptr;
+        tail = nullptr;
+        _size = 0;
 
         std::cout << "List is empty, start over!\n";
     }
 }
 
 void List::printList() {
-    std::cout << "List size: " << size() << "\n";
-    if (head == nullptr){
+    std::cout << "List size: " << _size << "\n";
+    if (!head){
         std::cout << "List is empty!\n";
     }
     else if (head->next != nullptr){
@@ -157,6 +159,9 @@ bool List::insertAt(int data, int index) {
         std::cout << "Index invalid, try again.\n";
         return false;
     }
+    else if (index == 0){
+        insertFront(data);
+    }
     else {
         Node* pNode = head;
         for (int i = 0; i < index; i++){
@@ -166,6 +171,7 @@ bool List::insertAt(int data, int index) {
         Node* temp = new Node{data, pNode, temp_prev};
         pNode->prev = temp;
         temp_prev->next = temp;
+        _size++;
     }
     return true;
 }
@@ -185,6 +191,7 @@ int List::removeAt(int index) {
         value = pNode->value;
         pNode->prev->next = pNode->next;
         pNode->next->prev = pNode->prev;
+        _size--;
     }
     return value;
 }
@@ -193,7 +200,7 @@ int List::findIndex(int data) {
     int index = 0;
     Node* pNode = head;
 
-    if (head == nullptr){
+    if (!head){
         std::cout << "There is nothing in the list, add something to search for silly!\n";
         return -1;
     }
@@ -219,3 +226,9 @@ int List::findIndex(int data) {
 
     return -1;
 }
+
+int List::peek() {
+    return head->value;
+}
+
+
