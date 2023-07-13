@@ -69,6 +69,7 @@ void List::insertFront(int data) {
     if (!head){
         head = new Node;
         head->value = data;
+        tail = head;
         _size++;
     }
     else {
@@ -138,6 +139,7 @@ void List::makeEmpty() {
 
 void List::printList() {
     std::cout << "List size: " << _size << "\n";
+    std::cout << "Tail is: " << tail->value << "\n";
     if (!head){
         std::cout << "List is empty!\n";
     }

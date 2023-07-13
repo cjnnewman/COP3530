@@ -7,7 +7,6 @@
 #define ASSIGNMENT_2_QUEUE_HPP
 #include "linkedlist.hpp"
 
-
 class Queue : public List {
     public:
         void enqueue (int data);

@@ -32,3 +32,15 @@
 7	333	1689287493562697314	CMakeFiles/Assignment_2.dir/queue.cpp.o	84f4bf294a979556
 7	338	1689287493566843079	CMakeFiles/Assignment_2.dir/linkedlist.cpp.o	ebdc9541f7a25906
 338	375	1689287493606292261	Assignment_2	fd2d274388943d6a
+7	399	1689288511014554907	CMakeFiles/Assignment_2.dir/stack.cpp.o	8405bcc858b730a9
+7	399	1689288511014555032	CMakeFiles/Assignment_2.dir/queue.cpp.o	84f4bf294a979556
+6	404	1689288511021468390	CMakeFiles/Assignment_2.dir/main.cpp.o	bce1ba487d5cb073
+7	405	1689288511023103771	CMakeFiles/Assignment_2.dir/linkedlist.cpp.o	ebdc9541f7a25906
+405	444	1689288511063486249	Assignment_2	fd2d274388943d6a
+7	298	1689288608714618978	CMakeFiles/Assignment_2.dir/queue.cpp.o	84f4bf294a979556
+7	299	1689288608714511561	CMakeFiles/Assignment_2.dir/stack.cpp.o	8405bcc858b730a9
+7	305	1689288608722512048	CMakeFiles/Assignment_2.dir/main.cpp.o	bce1ba487d5cb073
+7	309	1689288608726437021	CMakeFiles/Assignment_2.dir/linkedlist.cpp.o	ebdc9541f7a25906
+309	344	1689288608763468819	Assignment_2	fd2d274388943d6a
+6	245	1689288645049956974	CMakeFiles/Assignment_2.dir/linkedlist.cpp.o	ebdc9541f7a25906
+245	277	1689288645084515347	Assignment_2	fd2d274388943d6a

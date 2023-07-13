@@ -11,7 +11,6 @@ class List {
 public:
         List();
     ~List();
-    void isHeadNull();
     void insertFront(int data);
     void insertRear(int data);
     int removeFrontInt();
