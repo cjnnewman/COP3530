@@ -5,14 +5,13 @@
 #include "linkedlist.hpp"
 
 List::List() {
-    std::cout << "List object being created...\n";
     new Node {0, nullptr, nullptr};
     head = nullptr;
     tail = nullptr;
 }
 
 List::~List() {
-    std::cout << "Object is being destroyed...\n";
+    std::cout << "linked list object is being destroyed...\n";
     makeEmpty();
 
 }
@@ -69,6 +68,8 @@ void List::insertFront(int data) {
     if (!head){
         head = new Node;
         head->value = data;
+        head->next = nullptr;
+        head->prev = nullptr;
         tail = head;
         _size++;
     }
@@ -86,12 +87,12 @@ int List::removeFrontInt() {
     int value;
 
     if (!head){
-        std::cout << "List is empty, add something!\n";
         return -1;
     }
     else if (head->next != nullptr){
         Node* temp = head;
         head = head->next;
+        head->prev = nullptr;
         value = temp->value;
         delete temp;
         _size--;
@@ -100,6 +101,7 @@ int List::removeFrontInt() {
     else {
         value = head->value;
         head = nullptr;
+        tail = nullptr;
         _size--;
 
         return value;
@@ -117,7 +119,7 @@ void List::makeEmpty() {
     pNode = head;
 
     if (!head){
-        std::cout << "List is already empty!" << "\n";
+
     }
     else if (head->next != nullptr) {
         while (pNode->next != nullptr) {
@@ -132,16 +134,16 @@ void List::makeEmpty() {
         head = nullptr;
         tail = nullptr;
         _size = 0;
-
-        std::cout << "List is empty, start over!\n";
+    }
+    else {
+        head = nullptr;
+        delete head;
     }
 }
 
 void List::printList() {
-    std::cout << "List size: " << _size << "\n";
-    std::cout << "Tail is: " << tail->value << "\n";
     if (!head){
-        std::cout << "List is empty!\n";
+
     }
     else if (head->next != nullptr){
         Node* pNode = head;
@@ -154,6 +156,7 @@ void List::printList() {
     else{
         std::cout << head->value << "\n";
     }
+
 }
 
 bool List::insertAt(int data, int index) {
@@ -184,6 +187,26 @@ int List::removeAt(int index) {
     if (index > size() || index < 0){
         std::cout << "Index invalid, try again.\n";
         return -1;
+    }
+    else if (index == 0){
+        Node* temp = new Node;
+        temp = head;
+        value = head->value;
+        head = head->next;
+        head->prev = nullptr;
+        delete temp;
+        _size--;
+        return value;
+    }
+    else if (index == (_size - 1)){
+        Node* temp = new Node;
+        temp = tail;
+        value = tail->value;
+        tail = tail->prev;
+        tail->next = nullptr;
+        delete temp;
+        _size--;
+        return value;
     }
     else {
         Node* pNode = head;
@@ -229,8 +252,18 @@ int List::findIndex(int data) {
     return -1;
 }
 
-int List::peek() {
-    return head->value;
+int List::read(int index) {
+    return priv_traverse(index)->value;
+}
+
+List::Node *List::priv_traverse(int index) {
+    Node* pNode = new Node;
+    pNode = head;
+    for (int i = 0; i < index; i++){
+        pNode = pNode->next;
+    }
+
+    return pNode;
 }
 
 

@@ -16,7 +16,5 @@ int Stack::pop() {
 
 int Stack::peek() {
 
-    return List::peek();
-
-    return 0;
+    return List::read(0);
 }

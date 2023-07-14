@@ -9,7 +9,7 @@
 
 class List {
 public:
-        List();
+    List();
     ~List();
     void insertFront(int data);
     void insertRear(int data);
@@ -21,7 +21,7 @@ public:
     bool insertAt(int data, int index);
     int removeAt(int index);
     int findIndex(int data);
-    int peek();
+    int read(int index);
 
 private:
     struct Node {
@@ -33,6 +33,10 @@ private:
     Node* head;
     Node* tail;
     int _size = 0;
+
+    Node* priv_traverse(int index);
+
+
 
 
 };

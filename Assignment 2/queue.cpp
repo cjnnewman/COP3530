@@ -14,6 +14,5 @@ int Queue::dequeue() {
 }
 
 int Queue::peek() {
-    return List::peek();
-    return 0;
+    return List::read(0);
 }
