@@ -106,4 +106,22 @@ void BinarySearchTree::priv_deleteAllNodes(BinarySearchTree::Node *&currentRoot)
 
 }
 
+bool BinarySearchTree::searchBinaryTree(Node* root, int key) {
+    if (!root){
+        return false;
+    }
+    if (key == root->value){
+        return true;
+    }
+    else if (key < root->value){
+        return searchBinaryTree(root->left, key);
+    }
+    else if (key > root->value){
+        return searchBinaryTree(root->right, key);
+    }
+
+    return false;
+
+}
+
 

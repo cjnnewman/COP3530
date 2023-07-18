@@ -45,6 +45,7 @@ public:
     void postOrder(Node*);
     void breadthFirst(Node*);
     void deleteAllNodes();
+    bool searchBinaryTree(Node* root, int key);
 
 };
 

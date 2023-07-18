@@ -30,5 +30,15 @@ int main() {
     BST.breadthFirst(BST.getRoot());
     std::cout << "\n";
 
+    std::cout << "Enter value to search for: ";
+    std::cin >> userInputValue;
+    if (BST.searchBinaryTree(BST.getRoot(), userInputValue)){
+        std::cout << "Found value.\n";
+    }
+    else {
+        std::cout << "Value not found.\n";
+    }
+
+
     return 0;
 }
