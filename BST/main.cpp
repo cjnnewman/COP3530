@@ -30,6 +30,8 @@ int main() {
     BST.breadthFirst(BST.getRoot());
     std::cout << "\n";
 
+    std::cout << "Size of tree is " << BST.getSize() << " nodes.\n";
+
     std::cout << "Enter value to search for: ";
     std::cin >> userInputValue;
     if (BST.searchBinaryTree(BST.getRoot(), userInputValue)){
@@ -38,6 +40,18 @@ int main() {
     else {
         std::cout << "Value not found.\n";
     }
+
+    std::cout << "Enter a value to delete from the tree: ";
+    std::cin >> userInputValue;
+    if (BST.deleteNode(userInputValue)){
+        std::cout << "Value found and removed, new tree by breadth first search is:\n";
+        BST.breadthFirst(BST.getRoot());
+        std::cout << "\n";
+    }
+    else {
+        std::cout << "Value not found in tree, try again...\n";
+    }
+    std::cout << "Size of tree after delete is " << BST.getSize() << " nodes.\n";
 
 
     return 0;

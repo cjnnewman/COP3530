@@ -30,6 +30,8 @@ private:
 
     Node* private_insert(int value, Node* root);
     void priv_deleteAllNodes(Node* &currentRoot);
+    bool priv_deleteNode(Node* &currentRoot, int);
+    int priv_findMinValue(Node*);
     Node* root;
     int size = 0;
 
@@ -45,7 +47,9 @@ public:
     void postOrder(Node*);
     void breadthFirst(Node*);
     void deleteAllNodes();
-    bool searchBinaryTree(Node* root, int key);
+    bool searchBinaryTree(Node*, int);
+    bool deleteNode(int);
+    int getSize();
 
 };
 
