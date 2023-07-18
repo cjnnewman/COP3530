@@ -226,7 +226,6 @@ int List::findIndex(int data) {
     Node* pNode = head;
 
     if (!head){
-        std::cout << "There is nothing in the list, add something to search for silly!\n";
         return -1;
     }
 

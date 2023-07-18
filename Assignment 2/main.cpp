@@ -123,7 +123,7 @@ int main() {
         }
 
         std::cout << "Press enter key to continue ... ";
-        system("read");
+        std::cin.ignore(2);
     } while (true);
 
 
