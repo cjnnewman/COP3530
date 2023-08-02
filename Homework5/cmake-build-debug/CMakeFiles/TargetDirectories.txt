@@ -1,0 +1,3 @@
+/Users/calebnewman/Documents/GitHub/COP3530/Homework5/cmake-build-debug/CMakeFiles/Homework5.dir
+/Users/calebnewman/Documents/GitHub/COP3530/Homework5/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/calebnewman/Documents/GitHub/COP3530/Homework5/cmake-build-debug/CMakeFiles/rebuild_cache.dir
