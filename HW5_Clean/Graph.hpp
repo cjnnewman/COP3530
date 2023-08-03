@@ -38,6 +38,10 @@ private:
         Vertex *prevVertex;
         float totalDistance;
         bool visited;
+        std::string shortestRouteName;
+        std::string shortestRouteDir;
+        std::string shortestRouteDest;
+        float shortestRouteDistance;
 
         Vertex(std::string intersectionName){
             this->name = std::move(intersectionName);
@@ -58,6 +62,7 @@ private:
     void populateVertices(std::vector<std::string>);
     void addEdges();
     void updateDistances(int);
+    void prettyPrintRoute(std::vector<std::string>);
     int getVertexIndex(std::string);
     int getSmallestCostNode();
     bool existsUnvisitedNodes();

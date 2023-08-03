@@ -127,36 +127,31 @@ int Graph::getVertexIndex(std::string vertexName) {
 }
 
 void Graph::dijkstras(std::string startingIntersection, std::string endingIntersection) {
-    int smallestIndex = getVertexIndex(startingIntersection);
-    int cheapestEdgeIndex;
     int startingIntersectionIndex = getVertexIndex(startingIntersection);
     int endingIntersectionIndex = getVertexIndex(endingIntersection);
     adjList[startingIntersectionIndex].totalDistance = 0;
     adjList[startingIntersectionIndex].prevVertex = nullptr;
-    Vertex *temp;
-    Vertex* currentVertex = &adjList[startingIntersectionIndex];
     Vertex* startingVertex = &adjList[startingIntersectionIndex];
 
     while (existsUnvisitedNodes()){
         int currentIndex = getSmallestCostNode();
         adjList[currentIndex].visited = true;
-        //adjList[currentIndex].prevVertex = currentVertex;
-        //currentVertex = &adjList[currentIndex];
         updateDistances(currentIndex);
 
     }
 
-    currentVertex = &adjList[endingIntersectionIndex];
+    Vertex* currentVertex = &adjList[endingIntersectionIndex];
     std::vector<std::string> route;
     route.push_back(currentVertex->name);
     do {
         route.insert(route.begin(), currentVertex->prevVertex->name);
         currentVertex = currentVertex->prevVertex;
     } while (currentVertex != startingVertex);
-
     for (auto i : route){
-        std::cout << " " << i << "\n";
+        std::cout << i << "\n";
     }
+    prettyPrintRoute(route);
+
 }
 
 int Graph::getSmallestCostNode() {
@@ -178,25 +173,17 @@ int Graph::getSmallestCostNode() {
 
 void Graph::updateDistances(int currentIndex){
     Vertex* currentVertex = &adjList[currentIndex];
-
     for (auto i  : adjList[currentIndex].edges){
         if ((adjList[currentIndex].totalDistance + i.distance) < adjList[getVertexIndex(i.destination)].totalDistance) {
             int destIndex = getVertexIndex(i.destination);
             adjList[destIndex].totalDistance = (adjList[currentIndex].totalDistance + i.distance);
-            std::cout << "Updated total distance to " << i.destination << " from Arena to be "
-                      << adjList[getVertexIndex(i.destination)].totalDistance << "\n";
             adjList[getVertexIndex(i.destination)].prevVertex = currentVertex;
+            currentVertex->shortestRouteName = i.route;
+            currentVertex->shortestRouteDir = i.direction;
+            currentVertex->shortestRouteDistance = i.distance;
+            currentVertex->shortestRouteDest = i.destination;
         }
     }
-}
-
-int Graph::getCheapestEdge() {
-    int cheapestIntersectionIndex;
-    int cheapestEdgeCost = 1000;
-
-
-
-    return cheapestIntersectionIndex;
 }
 
 bool Graph::existsUnvisitedNodes() {
@@ -210,6 +197,8 @@ bool Graph::existsUnvisitedNodes() {
 
 void Graph::setupTest() {
     std::vector<std::string> sortedList = mergeSortVector(readFileIntersectionNames());
+
+    std::cout << "\nDisplaying sorted list ... \n\n";
     for (auto i : sortedList){
         std::cout << i << "\n";
     }
@@ -231,8 +220,16 @@ void Graph::setupTest() {
 
     std::cout << "\nAdding edges ...\n\n";
     addEdges();
+}
 
-
+void Graph::prettyPrintRoute(std::vector<std::string> route) {
+    int endIndex = (route.size() - 1);
+    int counter = 1;
+    std::cout << "\n\tRoute from " << route[0] << " to " << route[endIndex] << " is:\n\n";
+    for (auto i : route){
+        std::cout << counter << ". " << i << "\n";
+        counter++;
+    }
 
 }
 

@@ -10,7 +10,7 @@ int main() {
     Graph graph;
 
     graph.setupTest();
-    graph.dijkstras("Arena", "Alafaya&Gemini");
+    graph.dijkstras("Gemini&Orion", "RecCenter");
 
 
     return 0;
