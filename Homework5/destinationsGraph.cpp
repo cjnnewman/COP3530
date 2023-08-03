@@ -16,11 +16,13 @@ std::vector<std::string> destinationsGraph::readSortRemoveDupes() {
         intersectionNameSubString = line.substr(0, line.find(" "));
         intersectionsList.push_back(intersectionNameSubString);
     }
-    intersectionsList.erase(std::unique(intersectionsList.begin(), intersectionsList.end()), intersectionsList.end());
-    std::sort(intersectionsList.begin(), intersectionsList.end());
-    //mergeSortAlphabetically(intersectionsList);
 
-    return intersectionsList;
+    std::vector<std::string> intersectionsListSorted = mergeSortAlphabetically(intersectionsList);
+    for (auto i : intersectionsListSorted){
+        std::cout << "\n" << i << "\n";
+    }
+
+    return intersectionsListSorted;
 }
 
 void destinationsGraph::_privateSetGraphVertices(std::vector<std::string> intersectionsList) {
@@ -96,32 +98,54 @@ void destinationsGraph::dijkstras(int startingIntersectionIndex) {
 
 }
 
-std::vector<std::string> destinationsGraph::mergeSortAlphabetically(std::vector<std::string> intersectionList) {
-    int size = intersectionList.size();
+std::vector<std::string> destinationsGraph::mergeSortAlphabetically(std::vector<std::string> list) {
+    int size = list.size();
     int midIndex = size / 2;
-    if (intersectionList.size() <= 1){
-        return intersectionList;
+    std::vector<std::string> leftHalf;
+    std::vector<std::string> rightHalf;
+    if (size <= 1){
+        return list;
     }
 
+    for (int i = 0; i < midIndex; i++){
+        leftHalf.push_back(list[i]);
+    }
+    for (int i = midIndex; i < size; i++){
+        rightHalf.push_back(list[i]);
+    }
+    leftHalf = mergeSortAlphabetically(leftHalf);
+    rightHalf = mergeSortAlphabetically(rightHalf);
+    return mergeSortedLists(leftHalf, rightHalf);
 }
 
 std::vector<std::string> destinationsGraph::mergeSortedLists(std::vector<std::string> left, std::vector<std::string> right) {
     std::vector<std::string> sortedList;
 
+    std::cout << "Left half is: \n";
+    for (auto j : left){
+        std::cout << j << "\n";
+    }
+    std::cout << "Right half is: \n";
+    for (auto k : right){
+        std::cout << k << "\n";
+    }
+
     while ((left.size() > 0) && (right.size() > 0)){
         if (left[0] <= right[0]){
             sortedList.push_back(left[0]);
-            left = {left[1], left[(left.size()-1)]};
+            left.erase(left.begin());
         }
         else {
             sortedList.push_back(right[0]);
-            right = {right[1], right[(right.size()-1)]};
+            right.erase(right.begin());
         }
-        if (!(left.empty())){
+        while (!(left.empty())){
             sortedList.push_back(left[0]);
+            left.erase(left.begin());
         }
-        if (!(right.empty())){
+        while (!(right.empty())){
             sortedList.push_back(right[0]);
+            right.erase(right.begin());
         }
     }
 
@@ -137,7 +161,7 @@ void destinationsGraph::testPrint() {
 
 bool destinationsGraph::existsUnvisitedNodes() {
     for (auto i : adjList){
-        if (i.visited = false){
+        if (i.visited == false){
             return true;
         }
     }
@@ -146,10 +170,9 @@ bool destinationsGraph::existsUnvisitedNodes() {
 
 int destinationsGraph::getSmallestNodeIndex() {
     int smallestNodeIndex;
-    int
-    for (auto i : adjList){
+    /*for (auto i : adjList){
 
-    }
+    }*/
 
     return 0;
 }

@@ -12,6 +12,7 @@ int main() {
     std::string userEndingIntersection;
 
     mainGraph.readSortRemoveDupes();
+    /*
     mainGraph.setGraphVertices();
     mainGraph.readFileDetails();
 
@@ -24,7 +25,7 @@ int main() {
 
 
     mainGraph.calculateRoute(userStartingIntersection, userEndingIntersection);
-
+    */
 
     /*std::string currentIntersection;
     std::string destinationIntersection;
@@ -38,7 +39,7 @@ int main() {
     //std::cout << "Enter your map file name, WITHOUT extension: ";
     //std::cin >> userFilename;
 
-    mainGraph.testPrint();
+    //mainGraph.testPrint();
 
 
     return 0;
