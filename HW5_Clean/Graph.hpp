@@ -58,12 +58,13 @@ private:
     std::vector<std::string> mergeSortVector(std::vector<std::string>);
     std::vector<std::string> mergeVectors(std::vector<std::string>, std::vector<std::string>);
     std::vector<std::string> removeDuplicates(std::vector<std::string>);
+    std::vector<std::string> sortedNoDupes;
     int getCheapestEdge();
     void populateVertices(std::vector<std::string>);
     void addEdges();
     void updateDistances(int);
     void prettyPrintRoute(std::vector<std::string>);
-    int getVertexIndex(std::string);
+    int getVertexIndex(std::string, int, int);
     int getSmallestCostNode();
     bool existsUnvisitedNodes();
 

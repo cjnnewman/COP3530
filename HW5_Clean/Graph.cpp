@@ -6,6 +6,8 @@
 
 #include "Graph.hpp"
 
+// Function reads the file parsing only the first column of each line, enters these intersection
+// names into a vector.
 std::vector<std::string> Graph::readFileIntersectionNames() {
     std::string line;
     std::fstream textFile;
@@ -24,6 +26,7 @@ std::vector<std::string> Graph::readFileIntersectionNames() {
     return intersectionNamesVector;
 }
 
+// Function will implement a merge sort algorithm on the list of intersection names, alphabetically sorting them.
 std::vector<std::string> Graph::mergeSortVector(std::vector<std::string> listOfIntersections) {
     std::vector<std::string> leftHalf;
     std::vector<std::string> rightHalf;
@@ -47,6 +50,7 @@ std::vector<std::string> Graph::mergeSortVector(std::vector<std::string> listOfI
     return mergeVectors(leftHalf, rightHalf);
 }
 
+// Function merges the vectors as part of the merge sort algo.
 std::vector<std::string> Graph::mergeVectors(std::vector<std::string> leftHalf, std::vector<std::string> rightHalf) {
     std::vector<std::string> sortedIntersectionsVector;
 
@@ -72,21 +76,36 @@ std::vector<std::string> Graph::mergeVectors(std::vector<std::string> leftHalf, 
     return sortedIntersectionsVector;
 }
 
+// Function will cycle through the vector of intersection names, creating a copy and pushing into a new vector
+// if and only if the name does not already exist in the vector.
 std::vector<std::string> Graph::removeDuplicates(std::vector<std::string> sortedList) {
     std::vector<std::string> sortedListNoDuplicates;
+    std::string prevString = " ";
 
-    sortedList.erase(std::unique(sortedList.begin(), sortedList.end()), sortedList.end());
-    sortedListNoDuplicates = sortedList;
+    for (int i = 0; i < sortedList.size(); i++){
 
+        if (sortedList[i] != prevString){
+            sortedListNoDuplicates.push_back(sortedList[i]);
+            prevString = sortedList[i];
+        }
+        else {
+            std::cout << "skipped " << sortedList[i] << "\n";
+        }
+    }
+
+    sortedNoDupes = sortedListNoDuplicates;
     return sortedListNoDuplicates;
 }
 
+// Function to populate the adjacent list with each vertex, intersection names from the list vector.
 void Graph::populateVertices(std::vector<std::string> list) {
     for (auto i : list ){
         adjList.push_back(Vertex(i));
     }
 }
 
+// Function will find each pertaining intersection, and populate the vector of Edges stored in that vertex
+// to populate the list of connections.
 void Graph::addEdges() {
     std::string line;
     std::fstream textFile;
@@ -103,17 +122,18 @@ void Graph::addEdges() {
     while (std::getline(textFile, line)){
         std::stringstream iss(line);
         iss >> std::ws >> intersection >> route >> destination >> direction >> distance >> speed;
-        adjList[getVertexIndex(intersection)].edges.push_back(Edge(route, destination, direction, distance, speed));
+        adjList[getVertexIndex(intersection, 0, (sortedNoDupes.size() - 1))].edges.push_back(Edge(route, destination, direction, distance, speed));
     }
 
     textFile.close();
 
 }
 
-int Graph::getVertexIndex(std::string vertexName) {
-    bool foundIntersection = false;
+// Function performs a basic O(n) search on the list of intersections to find an intersections index in the
+// adjlist. (Sorry, i couldn't get the binary search to work :C)
+int Graph::getVertexIndex(std::string vertexName, int startIndex, int endIndex) {
     int index = 0;
-
+    bool foundIntersection = false;
     while (!foundIntersection){
         if (adjList[index].name.find(vertexName) != std::string::npos){
             foundIntersection = true;
@@ -126,9 +146,10 @@ int Graph::getVertexIndex(std::string vertexName) {
     return index;
 }
 
+// Implements dijkstras algorithm to find the shortest path between two vertices by distance or "cost"
 void Graph::dijkstras(std::string startingIntersection, std::string endingIntersection) {
-    int startingIntersectionIndex = getVertexIndex(startingIntersection);
-    int endingIntersectionIndex = getVertexIndex(endingIntersection);
+    int startingIntersectionIndex = getVertexIndex(startingIntersection, 0, (sortedNoDupes.size() - 1));
+    int endingIntersectionIndex = getVertexIndex(endingIntersection, 0, (sortedNoDupes.size() - 1));
     adjList[startingIntersectionIndex].totalDistance = 0;
     adjList[startingIntersectionIndex].prevVertex = nullptr;
     Vertex* startingVertex = &adjList[startingIntersectionIndex];
@@ -154,6 +175,7 @@ void Graph::dijkstras(std::string startingIntersection, std::string endingInters
 
 }
 
+// finds the smallest remaining node that has not been visited by dijkstras
 int Graph::getSmallestCostNode() {
     float smallestCost = 1000;
     int smallestCostIndex = -1;
@@ -162,7 +184,7 @@ int Graph::getSmallestCostNode() {
         if (!i.visited) {
             if (i.totalDistance < smallestCost) {
                 smallestCost = i.totalDistance;
-                smallestCostIndex = getVertexIndex(i.name);
+                smallestCostIndex = getVertexIndex(i.name, 0, (sortedNoDupes.size() - 1));
             }
         }
     }
@@ -170,14 +192,14 @@ int Graph::getSmallestCostNode() {
     return smallestCostIndex;
 }
 
-
+// updates distances from each note to it's edges based on the total distance traveled thus far
 void Graph::updateDistances(int currentIndex){
     Vertex* currentVertex = &adjList[currentIndex];
     for (auto i  : adjList[currentIndex].edges){
-        if ((adjList[currentIndex].totalDistance + i.distance) < adjList[getVertexIndex(i.destination)].totalDistance) {
-            int destIndex = getVertexIndex(i.destination);
+        if ((adjList[currentIndex].totalDistance + i.distance) < adjList[getVertexIndex(i.destination, 0, (sortedNoDupes.size() - 1))].totalDistance) {
+            int destIndex = getVertexIndex(i.destination, 0, (sortedNoDupes.size() - 1));
             adjList[destIndex].totalDistance = (adjList[currentIndex].totalDistance + i.distance);
-            adjList[getVertexIndex(i.destination)].prevVertex = currentVertex;
+            adjList[getVertexIndex(i.destination, 0, (sortedNoDupes.size() - 1))].prevVertex = currentVertex;
             currentVertex->shortestRouteName = i.route;
             currentVertex->shortestRouteDir = i.direction;
             currentVertex->shortestRouteDistance = i.distance;
@@ -186,6 +208,7 @@ void Graph::updateDistances(int currentIndex){
     }
 }
 
+// simply test to find if there remain vertices that are unvisited
 bool Graph::existsUnvisitedNodes() {
     for (auto i : adjList){
         if (!i.visited){
@@ -195,6 +218,7 @@ bool Graph::existsUnvisitedNodes() {
     return false;
 }
 
+// basic setup function for test purposes
 void Graph::setupTest() {
     std::vector<std::string> sortedList = mergeSortVector(readFileIntersectionNames());
 
@@ -222,10 +246,11 @@ void Graph::setupTest() {
     addEdges();
 }
 
+// prints route intersections
 void Graph::prettyPrintRoute(std::vector<std::string> route) {
     int endIndex = (route.size() - 1);
     int counter = 1;
-    std::cout << "\n\tRoute from " << route[0] << " to " << route[endIndex] << " is:\n\n";
+    std::cout << "\n\tShortest route from " << route[0] << " to " << route[endIndex] << " is:\n\n";
     for (auto i : route){
         std::cout << counter << ". " << i << "\n";
         counter++;
